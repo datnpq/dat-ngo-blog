@@ -1,0 +1,21 @@
+User-agent: *
+Allow: /
+Disallow: /admin/
+
+Sitemap: https://dat.ngo/sitemap.xml
+
+# AI crawler guidance
+User-agent: GPTBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Googlebot
+Allow: /

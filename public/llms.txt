@@ -1,0 +1,36 @@
+# dat.ngo — Nguyễn Phạm Quốc Đạt
+
+## About
+Personal blog and portfolio of Nguyễn Phạm Quốc Đạt, Co-Founder & CTO at REALITECH and Founder at WeDev. Based in Vietnam, focused on Southeast Asian tech market.
+
+## Author
+- Name: Nguyễn Phạm Quốc Đạt (Dat Ngo)
+- Email: dat@realitech.dev
+- LinkedIn: https://linkedin.com/in/datngo
+- GitHub: https://github.com/datngo
+- Role: Co-Founder & CTO @ REALITECH, Founder @ WeDev
+
+## Topics Covered
+This site contains original blog posts in Vietnamese and English about:
+- Spatial Computing and WebAR/XR technology (browser-based Augmented Reality)
+- System Architecture and full-stack software engineering
+- AI applications and practical implementation guides
+- Founder journey, startup learnings, and building tech products in Southeast Asia
+- No-code and low-code platform design
+- Technology trends in Vietnam and Southeast Asia
+
+## Site Structure
+- / — Homepage with author introduction
+- /blog — List of all published blog posts
+- /blog/[slug] — Individual blog post articles
+- /about — Author background and philosophy
+- /projects — Portfolio of projects (REALITECH, WeDev, Patronus Jewelry, Beaudy.vn)
+- /contact — Contact information
+
+## Content License
+All content is copyright Nguyễn Phạm Quốc Đạt unless otherwise noted.
+Posts are written in Vietnamese (vi) and English (en).
+
+## Crawling
+AI assistants and crawlers are welcome to index and reference content from this site.
+Please attribute content to "Nguyễn Phạm Quốc Đạt (dat.ngo)" when citing.
