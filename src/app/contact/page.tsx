@@ -58,11 +58,11 @@ export default function ContactPage() {
       <JsonLd data={personJsonLd} />
 
       <div className="max-w-[740px] mx-auto px-5 py-12 sm:py-16">
-        <header className="mb-10 pb-8 border-b border-[#E9E9E9]">
-          <h1 className="text-3xl sm:text-4xl font-bold text-neutral-900 mb-2 tracking-tight">
+        <header className="mb-10 pb-8 border-b border-border">
+          <h1 className="text-3xl sm:text-4xl font-bold text-ink mb-2 tracking-tight">
             Liên hệ
           </h1>
-          <p className="text-neutral-500 text-sm max-w-lg">
+          <p className="text-ink-secondary text-sm max-w-lg">
             Tôi luôn sẵn sàng trò chuyện về WebAR, Spatial Computing, system architecture, hay bất kỳ cơ hội hợp tác thú vị nào.
           </p>
         </header>
@@ -74,31 +74,31 @@ export default function ContactPage() {
               href={href}
               target={external ? "_blank" : undefined}
               rel={external ? "noopener noreferrer" : undefined}
-              className="group flex items-center justify-between p-5 bg-white border border-[#E9E9E9] rounded-2xl hover:border-neutral-300 hover:shadow-sm transition-all duration-200"
+              className="group flex items-center justify-between p-5 bg-card border border-border rounded-2xl hover:border-border-hover hover:shadow-sm transition-all duration-200"
             >
               <div className="flex items-start gap-4">
-                <div className="mt-0.5 p-2 bg-neutral-50 border border-[#EBEBEB] rounded-xl text-neutral-500 group-hover:text-neutral-800 group-hover:border-neutral-200 transition-colors">
+                <div className="mt-0.5 p-2 bg-elevated border border-[#EBEBEB] rounded-xl text-ink-secondary group-hover:text-ink group-hover:border-border transition-colors">
                   <Icon size={18} />
                 </div>
                 <div>
-                  <p className="text-[11px] font-semibold text-neutral-400 uppercase tracking-widest mb-0.5">
+                  <p className="text-[11px] font-semibold text-ink-muted uppercase tracking-widest mb-0.5">
                     {label}
                   </p>
-                  <p className="text-[15px] font-semibold text-neutral-900 mb-1">{value}</p>
-                  <p className="text-sm text-neutral-400">{description}</p>
+                  <p className="text-[15px] font-semibold text-ink mb-1">{value}</p>
+                  <p className="text-sm text-ink-muted">{description}</p>
                 </div>
               </div>
               <ArrowRight
                 size={15}
-                className="text-neutral-300 group-hover:text-neutral-600 transition-colors shrink-0 ml-4"
+                className="text-ink-muted group-hover:text-ink transition-colors shrink-0 ml-4"
               />
             </a>
           ))}
         </div>
 
-        <div className="p-6 bg-neutral-50 border border-[#E9E9E9] rounded-2xl">
-          <p className="text-sm text-neutral-500 leading-relaxed">
-            <span className="font-semibold text-neutral-800">Quan tâm đến hợp tác?</span>{" "}
+        <div className="p-6 bg-elevated border border-border rounded-2xl">
+          <p className="text-sm text-ink-secondary leading-relaxed">
+            <span className="font-semibold text-ink">Quan tâm đến hợp tác?</span>{" "}
             Nếu bạn đang xây dựng sản phẩm trong lĩnh vực WebAR/XR, thương mại điện tử, hoặc cần một đối tác kỹ thuật đáng tin cậy — hãy gửi email hoặc nhắn tin qua LinkedIn. Tôi đặc biệt hứng thú với các bài toán ở giao điểm giữa công nghệ không gian, AI, và thị trường Đông Nam Á.
           </p>
         </div>

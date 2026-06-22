@@ -18,7 +18,7 @@ export function ScrollToTop() {
     <button
       onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
       aria-label="Về đầu trang"
-      className="fixed bottom-8 right-6 z-50 p-2.5 rounded-full bg-white border border-[#E9E9E9] text-neutral-500 hover:text-neutral-900 hover:border-neutral-300 shadow-md transition-all duration-200"
+      className="fixed bottom-8 right-6 z-50 p-2.5 rounded-full bg-card border border-border text-ink-secondary hover:text-ink hover:border-border-hover hover:-translate-y-0.5 shadow-md transition-all duration-200 animate-fade-in"
     >
       <ArrowUp size={16} weight="bold" />
     </button>
