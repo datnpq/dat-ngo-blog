@@ -8,8 +8,8 @@ export function ContactSection() {
   ];
 
   return (
-    <section className="pt-8 border-t border-[#E9E9E9]">
-      <p className="text-xs font-semibold uppercase tracking-widest text-neutral-400 mb-4">Liên hệ</p>
+    <section className="pt-8 border-t border-border">
+      <p className="text-xs font-semibold uppercase tracking-widest text-ink-muted mb-4">Liên hệ</p>
       <div className="flex flex-col gap-2 max-w-md">
         {links.map(({ icon, label, href, external }) => (
           <a
@@ -17,13 +17,13 @@ export function ContactSection() {
             href={href}
             target={external ? "_blank" : undefined}
             rel={external ? "noopener noreferrer" : undefined}
-            className="group flex items-center justify-between px-4 py-3 bg-white border border-[#E9E9E9] rounded-xl text-sm text-neutral-600 hover:border-neutral-300 hover:text-neutral-900 transition-all"
+            className="group flex items-center justify-between px-4 py-3 bg-card border border-border rounded-xl text-sm text-ink-secondary hover:border-border-hover hover:text-ink transition-all"
           >
             <span className="flex items-center gap-2.5">
-              <span className="text-neutral-400 group-hover:text-neutral-700 transition-colors">{icon}</span>
+              <span className="text-ink-muted group-hover:text-ink transition-colors">{icon}</span>
               {label}
             </span>
-            <ArrowRight size={13} className="text-neutral-300 group-hover:text-neutral-600 transition-colors" />
+            <ArrowRight size={13} className="text-ink-muted group-hover:text-ink transition-colors" />
           </a>
         ))}
       </div>
