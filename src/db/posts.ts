@@ -172,6 +172,49 @@ export async function deletePost(id: string): Promise<boolean> {
   return !error;
 }
 
+export async function getRelatedPosts(
+  currentSlug: string,
+  tags: string[],
+  limit = 3
+): Promise<PostListItem[]> {
+  let query = supabase
+    .from("posts")
+    .select("*")
+    .eq("status", "published")
+    .neq("slug", currentSlug);
+
+  if (tags.length > 0) {
+    query = query.overlaps("tags", tags);
+  }
+
+  const { data } = await query
+    .order("published_at", { ascending: false })
+    .limit(limit);
+
+  let posts = (data ?? []).map(mapToPostListItem);
+
+  // Fallback: if not enough tag matches, fill with most recent posts
+  if (posts.length < limit) {
+    const { data: recent } = await supabase
+      .from("posts")
+      .select("*")
+      .eq("status", "published")
+      .neq("slug", currentSlug)
+      .order("published_at", { ascending: false })
+      .limit(limit + 1);
+    const seen = new Set(posts.map((p) => p.slug));
+    for (const row of recent ?? []) {
+      if (posts.length >= limit) break;
+      if (!seen.has(row.slug)) {
+        posts.push(mapToPostListItem(row));
+        seen.add(row.slug);
+      }
+    }
+  }
+
+  return posts.slice(0, limit);
+}
+
 export async function getAllPublishedPostsForSitemap(): Promise<
   Array<{ slug: string; updatedAt: Date }>
 > {

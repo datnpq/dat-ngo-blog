@@ -54,6 +54,18 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                 + Bài viết mới
               </Link>
             </li>
+            <li>
+              <Link
+                href="/admin/subscribers"
+                className={`block px-3 py-2 rounded-xl text-sm font-medium transition-colors ${
+                  pathname === "/admin/subscribers"
+                    ? "bg-blue-50 text-blue-700"
+                    : "text-neutral-600 hover:bg-neutral-50 hover:text-neutral-900"
+                }`}
+              >
+                Subscribers
+              </Link>
+            </li>
           </ul>
         </nav>
 
