@@ -53,23 +53,12 @@ export default function RootLayout({
   return (
     <html
       lang="vi"
-      suppressHydrationWarning
       className={`${geistSans.variable} ${geistMono.variable} ${lora.variable} h-full antialiased`}
     >
       <head>
         <meta charSet="UTF-8" />
-        {/* Apply theme before paint to avoid flash of incorrect theme */}
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `(function(){try{var t=localStorage.getItem('theme');var d=t==='dark'||(!t&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(d)document.documentElement.classList.add('dark');}catch(e){}})();`,
-          }}
-        />
-        {/* If JS is disabled, never keep scroll-reveal content hidden */}
-        <noscript>
-          <style>{`.reveal,.page-transition{opacity:1!important;transform:none!important}`}</style>
-        </noscript>
       </head>
-      <body className="min-h-full flex flex-col bg-surface text-ink">
+      <body className="min-h-full flex flex-col bg-[#FAFAF8] text-neutral-900">
         <Header />
         <main className="flex-1">{children}</main>
         <Footer />

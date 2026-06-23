@@ -44,7 +44,7 @@ const projects: Project[] = [
   {
     name: "REALITECH",
     role: "Co-Founder & CTO",
-    roleColor: "bg-blue-50 text-blue-700 border-blue-100 dark:bg-blue-500/10 dark:text-blue-300 dark:border-blue-500/20",
+    roleColor: "bg-blue-50 text-blue-700 border-blue-100",
     period: "2022 – nay",
     status: "active",
     description:
@@ -61,7 +61,7 @@ const projects: Project[] = [
   {
     name: "WeDev",
     role: "Founder",
-    roleColor: "bg-violet-50 text-violet-700 border-violet-100 dark:bg-violet-500/10 dark:text-violet-300 dark:border-violet-500/20",
+    roleColor: "bg-violet-50 text-violet-700 border-violet-100",
     period: "2021 – nay",
     status: "active",
     description:
@@ -110,7 +110,7 @@ const projects: Project[] = [
   {
     name: "UrBox · Lalamove",
     role: "Software Engineer",
-    roleColor: "bg-elevated text-ink-secondary border-border",
+    roleColor: "bg-neutral-100 text-neutral-600 border-neutral-200",
     period: "2019 – 2021",
     status: "completed",
     description:
@@ -129,11 +129,11 @@ export default function ProjectsPage() {
     <>
       <JsonLd data={jsonLd} />
       <div className="max-w-4xl mx-auto px-5 py-12 sm:py-16">
-        <header className="mb-10 pb-8 border-b border-border">
-          <h1 className="text-3xl sm:text-4xl font-bold text-ink mb-2 tracking-tight">
+        <header className="mb-10 pb-8 border-b border-[#E9E9E9]">
+          <h1 className="text-3xl sm:text-4xl font-bold text-neutral-900 mb-2 tracking-tight">
             Projects
           </h1>
-          <p className="text-ink-secondary text-sm max-w-xl">
+          <p className="text-neutral-500 text-sm max-w-xl">
             Các dự án tiêu biểu tôi đã xây dựng, co-found hoặc contribute — từ product đến engineering.
           </p>
         </header>
@@ -142,12 +142,12 @@ export default function ProjectsPage() {
           {projects.map((project) => (
             <li
               key={project.name}
-              className="group bg-card border border-border rounded-2xl p-6 hover:border-border-hover hover:shadow-sm transition-all duration-200"
+              className="group bg-white border border-[#E9E9E9] rounded-2xl p-6 hover:border-neutral-300 hover:shadow-sm transition-all duration-200"
             >
               {/* Header row */}
               <div className="flex flex-wrap items-start justify-between gap-3 mb-3">
                 <div className="flex items-center gap-3 flex-wrap">
-                  <h3 className="text-[17px] font-bold text-ink">
+                  <h3 className="text-[17px] font-bold text-neutral-900">
                     {project.link ? (
                       <a
                         href={project.link}
@@ -156,7 +156,7 @@ export default function ProjectsPage() {
                         className="hover:text-blue-700 transition-colors inline-flex items-center gap-1.5"
                       >
                         {project.name}
-                        <ArrowSquareOut size={14} className="text-ink-muted group-hover:text-blue-500 transition-colors" />
+                        <ArrowSquareOut size={14} className="text-neutral-400 group-hover:text-blue-500 transition-colors" />
                       </a>
                     ) : (
                       project.name
@@ -168,23 +168,23 @@ export default function ProjectsPage() {
                   <span className={`text-xs font-medium px-2 py-0.5 rounded-full ${
                     project.status === "active"
                       ? "bg-emerald-50 text-emerald-600"
-                      : "bg-elevated text-ink-muted"
+                      : "bg-neutral-50 text-neutral-400"
                   }`}>
                     {project.status === "active" ? "● Active" : "Completed"}
                   </span>
                 </div>
-                <span className="text-xs text-ink-muted font-medium">{project.period}</span>
+                <span className="text-xs text-neutral-400 font-medium">{project.period}</span>
               </div>
 
               {/* Description */}
-              <p className="text-ink-secondary text-sm leading-relaxed mb-4">
+              <p className="text-neutral-500 text-sm leading-relaxed mb-4">
                 {project.description}
               </p>
 
               {/* Highlights */}
               <ul className="space-y-1 mb-4">
                 {project.highlights.map((h) => (
-                  <li key={h} className="flex items-start gap-2 text-sm text-ink-secondary">
+                  <li key={h} className="flex items-start gap-2 text-sm text-neutral-600">
                     <span className="text-blue-400 mt-0.5 shrink-0">→</span>
                     <span>{h}</span>
                   </li>
@@ -197,7 +197,7 @@ export default function ProjectsPage() {
                   {project.tags.map((tag) => (
                     <span
                       key={tag}
-                      className="px-2.5 py-0.5 bg-elevated border border-[#EBEBEB] text-ink-secondary text-xs rounded-lg font-mono"
+                      className="px-2.5 py-0.5 bg-neutral-50 border border-[#EBEBEB] text-neutral-500 text-xs rounded-lg font-mono"
                     >
                       {tag}
                     </span>
@@ -208,7 +208,7 @@ export default function ProjectsPage() {
                     href={project.link}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-xs text-blue-600 dark:text-blue-400 hover:text-blue-800 font-medium flex items-center gap-1 transition-colors"
+                    className="text-xs text-blue-600 hover:text-blue-800 font-medium flex items-center gap-1 transition-colors"
                   >
                     {project.linkLabel ?? project.link}
                     <ArrowSquareOut size={11} />
