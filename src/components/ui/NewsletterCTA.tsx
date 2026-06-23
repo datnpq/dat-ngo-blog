@@ -37,11 +37,11 @@ export function NewsletterCTA({ variant = "post" }: NewsletterCTAProps) {
 
   if (variant === "homepage") {
     return (
-      <section className="pt-8 border-t border-border">
-        <p className="text-xs font-semibold uppercase tracking-widest text-ink-muted mb-3">
+      <section className="pt-8 border-t border-[#E9E9E9]">
+        <p className="text-xs font-semibold uppercase tracking-widest text-neutral-400 mb-3">
           Newsletter
         </p>
-        <p className="text-sm text-ink-secondary mb-4 max-w-sm">
+        <p className="text-sm text-neutral-600 mb-4 max-w-sm">
           Bài viết mới về WebAR, AI và hành trình Founder — thẳng vào inbox.
         </p>
         <NewsletterForm email={email} setEmail={setEmail} status={status} onSubmit={handleSubmit} compact />
@@ -50,14 +50,14 @@ export function NewsletterCTA({ variant = "post" }: NewsletterCTAProps) {
   }
 
   return (
-    <div className="my-12 p-6 sm:p-8 bg-gradient-to-br from-blue-50 to-indigo-50 border border-blue-100 dark:border-blue-500/20 rounded-2xl">
+    <div className="my-12 p-6 sm:p-8 bg-gradient-to-br from-blue-50 to-indigo-50 border border-blue-100 rounded-2xl">
       <div className="flex items-start gap-4">
         <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500 to-violet-600 flex items-center justify-center text-white text-sm font-bold shrink-0">
           ĐN
         </div>
         <div className="flex-1">
-          <p className="font-bold text-ink mb-1">Nhận bài viết mới qua email</p>
-          <p className="text-sm text-ink-secondary mb-4">
+          <p className="font-bold text-neutral-900 mb-1">Nhận bài viết mới qua email</p>
+          <p className="text-sm text-neutral-500 mb-4">
             Viết về WebAR, Spatial Computing, AI và hành trình Founder. Không spam — chỉ khi có bài hay.
           </p>
           <NewsletterForm email={email} setEmail={setEmail} status={status} onSubmit={handleSubmit} />
@@ -92,7 +92,7 @@ function NewsletterForm({
         onChange={(e) => setEmail(e.target.value)}
         required
         placeholder="email@example.com"
-        className="flex-1 px-3 py-2 text-sm border border-border rounded-xl bg-card focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+        className="flex-1 px-3 py-2 text-sm border border-[#E9E9E9] rounded-xl bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
       />
       <button
         type="submit"

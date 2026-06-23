@@ -43,9 +43,9 @@ export function PostCard({ post, featured = false }: PostCardProps) {
 
   if (featured) {
     return (
-      <article className="group mb-10 pb-10 border-b border-border">
+      <article className="group mb-10 pb-10 border-b border-[#E9E9E9]">
         {/* Cover image / gradient */}
-        <Link href={`/blog/${post.slug}`} className="block mb-5 overflow-hidden rounded-2xl aspect-[2/1] bg-gradient-to-br border border-border">
+        <Link href={`/blog/${post.slug}`} className="block mb-5 overflow-hidden rounded-2xl aspect-[2/1] bg-gradient-to-br border border-[#E9E9E9]">
           {post.featuredImageUrl ? (
             <Image
               src={post.featuredImageUrl}
@@ -55,10 +55,10 @@ export function PostCard({ post, featured = false }: PostCardProps) {
               className="w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-500"
             />
           ) : (
-            <div className={`w-full h-full bg-gradient-to-br ${gradient} dark:opacity-40 flex items-end p-6`}>
+            <div className={`w-full h-full bg-gradient-to-br ${gradient} flex items-end p-6`}>
               <div className="flex gap-2">
                 {post.tags.slice(0, 2).map((t) => (
-                  <span key={t} className="text-xs font-medium text-ink-secondary bg-white/70 px-2.5 py-1 rounded-full">
+                  <span key={t} className="text-xs font-medium text-neutral-500 bg-white/70 px-2.5 py-1 rounded-full">
                     {t}
                   </span>
                 ))}
@@ -69,25 +69,25 @@ export function PostCard({ post, featured = false }: PostCardProps) {
 
         {/* Content */}
         {post.tags[0] && (
-          <span className="text-[11px] font-semibold uppercase tracking-widest text-blue-600 dark:text-blue-400 mb-2 block">
+          <span className="text-[11px] font-semibold uppercase tracking-widest text-blue-600 mb-2 block">
             {post.tags[0]}
           </span>
         )}
         <Link href={`/blog/${post.slug}`}>
-          <h2 className="text-2xl sm:text-3xl font-bold text-ink group-hover:text-blue-700 dark:group-hover:text-blue-400 transition-colors leading-tight mb-3">
+          <h2 className="text-2xl sm:text-3xl font-bold text-neutral-900 group-hover:text-blue-700 transition-colors leading-tight mb-3">
             {post.title}
           </h2>
         </Link>
         {post.excerpt && (
-          <p className="text-ink-secondary leading-relaxed mb-4 line-clamp-2 text-[15px]">
+          <p className="text-neutral-500 leading-relaxed mb-4 line-clamp-2 text-[15px]">
             {post.excerpt}
           </p>
         )}
-        <div className="flex items-center gap-2.5 text-xs text-ink-muted">
+        <div className="flex items-center gap-2.5 text-xs text-neutral-400">
           <div className="w-6 h-6 rounded-full bg-gradient-to-br from-blue-500 to-violet-600 flex items-center justify-center text-[9px] font-bold text-white shrink-0">
             ĐN
           </div>
-          <span className="text-ink-secondary font-medium">Nguyễn Phạm Quốc Đạt</span>
+          <span className="text-neutral-600 font-medium">Nguyễn Phạm Quốc Đạt</span>
           <span>·</span>
           <time>{formatDate(post.publishedAt)}</time>
           <span>·</span>
@@ -102,25 +102,25 @@ export function PostCard({ post, featured = false }: PostCardProps) {
 
   /* Regular card — image right, text left */
   return (
-    <article className="group py-6 border-b border-border last:border-0 flex gap-5">
+    <article className="group py-6 border-b border-[#E9E9E9] last:border-0 flex gap-5">
       {/* Text */}
       <div className="flex-1 min-w-0">
         {post.tags[0] && (
-          <span className="text-[11px] font-semibold uppercase tracking-widest text-blue-600 dark:text-blue-400 mb-1.5 block">
+          <span className="text-[11px] font-semibold uppercase tracking-widest text-blue-600 mb-1.5 block">
             {post.tags[0]}
           </span>
         )}
         <Link href={`/blog/${post.slug}`}>
-          <h2 className="text-[17px] font-bold text-ink group-hover:text-blue-700 dark:group-hover:text-blue-400 transition-colors leading-snug mb-2">
+          <h2 className="text-[17px] font-bold text-neutral-900 group-hover:text-blue-700 transition-colors leading-snug mb-2">
             {post.title}
           </h2>
         </Link>
         {post.excerpt && (
-          <p className="text-ink-secondary text-sm leading-relaxed line-clamp-2 mb-3">
+          <p className="text-neutral-500 text-sm leading-relaxed line-clamp-2 mb-3">
             {post.excerpt}
           </p>
         )}
-        <div className="flex items-center gap-2 text-xs text-ink-muted">
+        <div className="flex items-center gap-2 text-xs text-neutral-400">
           <time>{formatDate(post.publishedAt)}</time>
           <span>·</span>
           <span className="flex items-center gap-1">
@@ -133,7 +133,7 @@ export function PostCard({ post, featured = false }: PostCardProps) {
       {/* Thumbnail */}
       <Link
         href={`/blog/${post.slug}`}
-        className="shrink-0 w-28 sm:w-36 h-20 sm:h-24 rounded-xl overflow-hidden border border-border"
+        className="shrink-0 w-28 sm:w-36 h-20 sm:h-24 rounded-xl overflow-hidden border border-[#E9E9E9]"
       >
         {post.featuredImageUrl ? (
           <Image
@@ -144,7 +144,7 @@ export function PostCard({ post, featured = false }: PostCardProps) {
             className="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-500"
           />
         ) : (
-          <div className={`w-full h-full bg-gradient-to-br ${gradient} dark:opacity-40`} />
+          <div className={`w-full h-full bg-gradient-to-br ${gradient}`} />
         )}
       </Link>
     </article>

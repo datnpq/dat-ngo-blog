@@ -17,7 +17,6 @@ import { ReadingProgress } from "@/components/blog/ReadingProgress";
 import { ScrollToTop } from "@/components/blog/ScrollToTop";
 import { GiscusComments } from "@/components/blog/GiscusComments";
 import { NewsletterCTA } from "@/components/ui/NewsletterCTA";
-import { MotionFigure } from "@/components/ui/MotionFigure";
 
 export const revalidate = 60;
 
@@ -146,7 +145,7 @@ export default async function PostDetailPage({ params }: PostPageProps) {
         {/* Back nav */}
         <Link
           href="/blog"
-          className="inline-flex items-center gap-1.5 text-sm text-ink-muted hover:text-ink transition-colors mb-10"
+          className="inline-flex items-center gap-1.5 text-sm text-neutral-400 hover:text-neutral-700 transition-colors mb-10"
         >
           <ArrowLeft size={14} />
           Blog
@@ -160,7 +159,7 @@ export default async function PostDetailPage({ params }: PostPageProps) {
               {post.tags.map((tag) => (
                 <span
                   key={tag}
-                  className="text-xs font-semibold uppercase tracking-wider text-blue-700 dark:text-blue-300 bg-blue-50 dark:bg-blue-500/10 border border-blue-100 dark:border-blue-500/20 px-2.5 py-1 rounded-full"
+                  className="text-xs font-semibold uppercase tracking-wider text-blue-700 bg-blue-50 border border-blue-100 px-2.5 py-1 rounded-full"
                 >
                   {tag}
                 </span>
@@ -169,7 +168,7 @@ export default async function PostDetailPage({ params }: PostPageProps) {
           )}
 
           {/* Title */}
-          <h1 className="text-3xl sm:text-[2.4rem] font-bold text-ink mb-6 tracking-tight leading-[1.2]">
+          <h1 className="text-3xl sm:text-[2.4rem] font-bold text-neutral-900 mb-6 tracking-tight leading-[1.2]">
             {post.title}
           </h1>
 
@@ -179,10 +178,10 @@ export default async function PostDetailPage({ params }: PostPageProps) {
               ĐN
             </div>
             <div>
-              <p className="text-sm font-semibold text-ink leading-none mb-1">
+              <p className="text-sm font-semibold text-neutral-800 leading-none mb-1">
                 Nguyễn Phạm Quốc Đạt
               </p>
-              <div className="flex items-center gap-2 text-xs text-ink-muted">
+              <div className="flex items-center gap-2 text-xs text-neutral-400">
                 {formattedDate && (
                   <>
                     <span className="flex items-center gap-1">
@@ -203,7 +202,7 @@ export default async function PostDetailPage({ params }: PostPageProps) {
 
         {/* Featured image */}
         {post.featuredImageUrl && (
-          <MotionFigure className="mb-10 rounded-2xl overflow-hidden border border-border aspect-[2/1]">
+          <div className="mb-10 rounded-2xl overflow-hidden border border-[#E9E9E9] aspect-[2/1]">
             <Image
               src={post.featuredImageUrl}
               alt={post.title}
@@ -212,10 +211,10 @@ export default async function PostDetailPage({ params }: PostPageProps) {
               className="w-full h-full object-cover"
               priority
             />
-          </MotionFigure>
+          </div>
         )}
 
-        <hr className="border-border mb-10" />
+        <hr className="border-[#E9E9E9] mb-10" />
 
         {/* ── Article body ── */}
         <div
@@ -223,7 +222,7 @@ export default async function PostDetailPage({ params }: PostPageProps) {
           dangerouslySetInnerHTML={{ __html: post.body }}
         />
 
-        <hr className="border-border mt-12 mb-10" />
+        <hr className="border-[#E9E9E9] mt-12 mb-10" />
 
         {/* ── Newsletter ── */}
         <NewsletterCTA variant="post" />
@@ -232,23 +231,23 @@ export default async function PostDetailPage({ params }: PostPageProps) {
         <GiscusComments slug={post.slug} />
 
         {/* ── Author card ── */}
-        <div className="flex gap-5 p-6 bg-card border border-border rounded-2xl">
+        <div className="flex gap-5 p-6 bg-white border border-[#E9E9E9] rounded-2xl">
           <div className="w-14 h-14 rounded-full bg-gradient-to-br from-blue-500 to-violet-600 flex items-center justify-center text-[15px] font-bold text-white shrink-0 select-none">
             ĐN
           </div>
           <div className="flex-1 min-w-0">
-            <p className="font-bold text-ink mb-0.5">Nguyễn Phạm Quốc Đạt</p>
-            <p className="text-xs text-ink-muted mb-3">
+            <p className="font-bold text-neutral-900 mb-0.5">Nguyễn Phạm Quốc Đạt</p>
+            <p className="text-xs text-neutral-400 mb-3">
               Co-Founder @ REALITECH · Founder @ WeDev
             </p>
-            <p className="text-sm text-ink-secondary leading-relaxed mb-4">
+            <p className="text-sm text-neutral-500 leading-relaxed mb-4">
               Xây dựng nền tảng WebAR no-code cho SMEs/enterprises tại Đông Nam Á.
               Viết về Spatial Computing, System Architecture, AI và hành trình Founder.
             </p>
             <div className="flex items-center gap-4">
               <a
                 href="mailto:dat@realitech.dev"
-                className="flex items-center gap-1.5 text-xs text-ink-muted hover:text-ink transition-colors"
+                className="flex items-center gap-1.5 text-xs text-neutral-400 hover:text-neutral-700 transition-colors"
               >
                 <Envelope size={13} /> Email
               </a>
@@ -256,7 +255,7 @@ export default async function PostDetailPage({ params }: PostPageProps) {
                 href="https://linkedin.com/in/datngo"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-1.5 text-xs text-ink-muted hover:text-ink transition-colors"
+                className="flex items-center gap-1.5 text-xs text-neutral-400 hover:text-neutral-700 transition-colors"
               >
                 <LinkedinLogo size={13} /> LinkedIn
               </a>
@@ -264,7 +263,7 @@ export default async function PostDetailPage({ params }: PostPageProps) {
                 href="https://github.com/datngo"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-1.5 text-xs text-ink-muted hover:text-ink transition-colors"
+                className="flex items-center gap-1.5 text-xs text-neutral-400 hover:text-neutral-700 transition-colors"
               >
                 <GithubLogo size={13} /> GitHub
               </a>
@@ -276,7 +275,7 @@ export default async function PostDetailPage({ params }: PostPageProps) {
         <div className="mt-8">
           <Link
             href="/blog"
-            className="inline-flex items-center gap-2 text-sm text-ink-muted hover:text-ink transition-colors"
+            className="inline-flex items-center gap-2 text-sm text-neutral-400 hover:text-neutral-700 transition-colors"
           >
             <ArrowLeft size={14} />
             Xem tất cả bài viết

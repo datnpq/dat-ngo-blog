@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { getPublishedPosts } from "@/db/posts";
 import { PostCard } from "@/components/blog/PostCard";
 import { Pagination } from "@/components/blog/Pagination";
-import { Reveal } from "@/components/ui/Reveal";
 import { JsonLd } from "@/components/seo/JsonLd";
 
 export const revalidate = 60;
@@ -57,11 +56,11 @@ export default async function BlogListPage({ searchParams }: BlogPageProps) {
 
       <div className="max-w-4xl mx-auto px-5 py-10 sm:py-14">
         {/* Header */}
-        <header className="mb-8 pb-8 border-b border-border">
-          <h1 className="text-3xl sm:text-4xl font-bold text-ink mb-2 tracking-tight">
+        <header className="mb-8 pb-8 border-b border-[#E9E9E9]">
+          <h1 className="text-3xl sm:text-4xl font-bold text-neutral-900 mb-2 tracking-tight">
             Blog
           </h1>
-          <p className="text-ink-secondary text-sm">
+          <p className="text-neutral-500 text-sm">
             Viết về Spatial Computing, AI, System Architecture và hành trình Founder.
           </p>
 
@@ -72,8 +71,8 @@ export default async function BlogListPage({ searchParams }: BlogPageProps) {
                 key={t}
                 className={`px-3.5 py-1.5 rounded-full text-xs font-medium border transition-colors cursor-default ${
                   t === "Tất cả"
-                    ? "bg-ink text-surface border-ink"
-                    : "bg-card text-ink-secondary border-border"
+                    ? "bg-neutral-900 text-white border-neutral-900"
+                    : "bg-white text-neutral-500 border-[#E9E9E9]"
                 }`}
               >
                 {t}
@@ -85,18 +84,17 @@ export default async function BlogListPage({ searchParams }: BlogPageProps) {
         {/* Post list */}
         {posts.length === 0 ? (
           <div className="py-20 text-center">
-            <p className="text-ink-muted text-sm">Chưa có bài viết nào.</p>
-            <p className="text-ink-muted text-xs mt-1">Quay lại sớm nhé!</p>
+            <p className="text-neutral-400 text-sm">Chưa có bài viết nào.</p>
+            <p className="text-neutral-300 text-xs mt-1">Quay lại sớm nhé!</p>
           </div>
         ) : (
           <div>
             {posts.map((post, index) => (
-              <Reveal key={post.id} delay={Math.min(index, 6) * 70}>
-                <PostCard
-                  post={post}
-                  featured={index === 0 && currentPage === 1}
-                />
-              </Reveal>
+              <PostCard
+                key={post.id}
+                post={post}
+                featured={index === 0 && currentPage === 1}
+              />
             ))}
           </div>
         )}
