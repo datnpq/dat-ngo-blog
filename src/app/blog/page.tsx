@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
-import { getPublishedPosts } from "@/db/posts";
+import Link from "next/link";
+import { getPublishedPosts, getAllTags } from "@/db/posts";
 import { PostCard } from "@/components/blog/PostCard";
 import { Pagination } from "@/components/blog/Pagination";
+import { PostSearch } from "@/components/blog/PostSearch";
 import { JsonLd } from "@/components/seo/JsonLd";
 
 export const revalidate = 60;
@@ -29,8 +31,6 @@ const breadcrumbJsonLd = {
   ],
 };
 
-const topics = ["Tất cả", "Spatial Computing", "WebAR / XR", "AI", "Engineering", "Founder"];
-
 interface BlogPageProps {
   searchParams: Promise<{ page?: string }>;
 }
@@ -41,11 +41,16 @@ export default async function BlogListPage({ searchParams }: BlogPageProps) {
 
   let posts: Awaited<ReturnType<typeof getPublishedPosts>>["posts"] = [];
   let totalPages = 1;
+  let tags: string[] = [];
 
   try {
-    const result = await getPublishedPosts(currentPage);
+    const [result, allTags] = await Promise.all([
+      getPublishedPosts(currentPage),
+      getAllTags(),
+    ]);
     posts = result.posts;
     totalPages = result.totalPages;
+    tags = allTags;
   } catch {
     // DB unavailable
   }
@@ -64,21 +69,26 @@ export default async function BlogListPage({ searchParams }: BlogPageProps) {
             Viết về Spatial Computing, AI, System Architecture và hành trình Founder.
           </p>
 
-          {/* Topic pills */}
-          <div className="flex flex-wrap gap-2 mt-5">
-            {topics.map((t) => (
-              <span
-                key={t}
-                className={`px-3.5 py-1.5 rounded-full text-xs font-medium border transition-colors cursor-default ${
-                  t === "Tất cả"
-                    ? "bg-neutral-900 text-white border-neutral-900"
-                    : "bg-white text-neutral-500 border-[#E9E9E9]"
-                }`}
-              >
-                {t}
+          {/* Topic pills — real tags linking to /tag/[tag] */}
+          {tags.length > 0 && (
+            <div className="flex flex-wrap gap-2 mt-5">
+              <span className="px-3.5 py-1.5 rounded-full text-xs font-medium border bg-neutral-900 text-white border-neutral-900">
+                Tất cả
               </span>
-            ))}
-          </div>
+              {tags.map((t) => (
+                <Link
+                  key={t}
+                  href={`/tag/${encodeURIComponent(t)}`}
+                  className="px-3.5 py-1.5 rounded-full text-xs font-medium border bg-white text-neutral-500 border-[#E9E9E9] hover:border-neutral-300 hover:text-neutral-900 transition-colors"
+                >
+                  {t}
+                </Link>
+              ))}
+            </div>
+          )}
+
+          {/* Search */}
+          {posts.length > 0 && <PostSearch />}
         </header>
 
         {/* Post list */}
@@ -88,15 +98,22 @@ export default async function BlogListPage({ searchParams }: BlogPageProps) {
             <p className="text-neutral-300 text-xs mt-1">Quay lại sớm nhé!</p>
           </div>
         ) : (
-          <div>
-            {posts.map((post, index) => (
-              <PostCard
-                key={post.id}
-                post={post}
-                featured={index === 0 && currentPage === 1}
-              />
-            ))}
-          </div>
+          <>
+            <div id="post-list">
+              {posts.map((post, index) => (
+                <div
+                  key={post.id}
+                  className="post-item"
+                  data-search={`${post.title} ${post.excerpt ?? ""} ${post.tags.join(" ")}`.toLowerCase()}
+                >
+                  <PostCard post={post} featured={index === 0 && currentPage === 1} />
+                </div>
+              ))}
+            </div>
+            <p id="post-empty" style={{ display: "none" }} className="py-16 text-center text-neutral-400 text-sm">
+              Không tìm thấy bài viết phù hợp.
+            </p>
+          </>
         )}
 
         <Pagination currentPage={currentPage} totalPages={totalPages} />

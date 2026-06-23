@@ -10,7 +10,7 @@ import {
   LinkedinLogo,
   GithubLogo,
 } from "@phosphor-icons/react/dist/ssr";
-import { getPostBySlug, getAllPublishedPostsForSitemap, getRelatedPosts } from "@/db/posts";
+import { getPostBySlug, getAllPublishedPostsForSitemap, getRelatedPosts, getAdjacentPosts } from "@/db/posts";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { calculateReadingTime } from "@/lib/content";
 import { ReadingProgress } from "@/components/blog/ReadingProgress";
@@ -22,6 +22,8 @@ import { ShareButtons } from "@/components/blog/ShareButtons";
 import { TableOfContents } from "@/components/blog/TableOfContents";
 import { PostCard } from "@/components/blog/PostCard";
 import { SupportCTA } from "@/components/ui/SupportCTA";
+import { CodeCopyButtons } from "@/components/blog/CodeCopyButtons";
+import { ArrowRight } from "@phosphor-icons/react/dist/ssr";
 
 export const revalidate = 60;
 
@@ -90,6 +92,7 @@ export default async function PostDetailPage({ params }: PostPageProps) {
   if (!post) notFound();
 
   const relatedPosts = await getRelatedPosts(post.slug, post.tags, 3);
+  const { prev, next } = await getAdjacentPosts(post.slug);
 
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://dat.ngo";
   const canonicalUrl = `${siteUrl}/blog/${post.slug}`;
@@ -146,6 +149,7 @@ export default async function PostDetailPage({ params }: PostPageProps) {
       <ReadingProgress />
       <ScrollToTop />
       <SubscribeModal />
+      <CodeCopyButtons />
 
       {/* Reading container — narrower than site max for focus */}
       <div className="max-w-[740px] mx-auto px-5 py-10 sm:py-14">
@@ -301,6 +305,40 @@ export default async function PostDetailPage({ params }: PostPageProps) {
             </div>
           </div>
         </div>
+
+        {/* Prev / Next navigation */}
+        {(prev || next) && (
+          <nav className="mt-10 grid sm:grid-cols-2 gap-4">
+            {prev ? (
+              <Link
+                href={`/blog/${prev.slug}`}
+                className="group p-4 border border-[#E9E9E9] rounded-2xl hover:border-neutral-300 transition-colors"
+              >
+                <span className="flex items-center gap-1 text-xs text-neutral-400 mb-1">
+                  <ArrowLeft size={12} /> Bài mới hơn
+                </span>
+                <span className="text-sm font-semibold text-neutral-900 group-hover:text-blue-700 transition-colors line-clamp-2">
+                  {prev.title}
+                </span>
+              </Link>
+            ) : (
+              <span />
+            )}
+            {next && (
+              <Link
+                href={`/blog/${next.slug}`}
+                className="group p-4 border border-[#E9E9E9] rounded-2xl hover:border-neutral-300 transition-colors text-right"
+              >
+                <span className="flex items-center justify-end gap-1 text-xs text-neutral-400 mb-1">
+                  Bài cũ hơn <ArrowRight size={12} />
+                </span>
+                <span className="text-sm font-semibold text-neutral-900 group-hover:text-blue-700 transition-colors line-clamp-2">
+                  {next.title}
+                </span>
+              </Link>
+            )}
+          </nav>
+        )}
 
         {/* Back nav */}
         <div className="mt-8">
