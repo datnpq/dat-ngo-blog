@@ -15,19 +15,12 @@ export function NewsletterCTA({ variant = "post" }: NewsletterCTAProps) {
     if (!email.trim()) return;
     setStatus("loading");
     try {
-      // Buttondown API — set NEXT_PUBLIC_BUTTONDOWN_USERNAME to activate
-      const username = process.env.NEXT_PUBLIC_BUTTONDOWN_USERNAME;
-      if (username) {
-        const res = await fetch(`https://api.buttondown.email/v1/subscribers`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Token ${process.env.NEXT_PUBLIC_BUTTONDOWN_API_KEY ?? ""}`,
-          },
-          body: JSON.stringify({ email_address: email, tags: ["dat.ngo"] }),
-        });
-        if (!res.ok) throw new Error("Failed");
-      }
+      const res = await fetch("/api/subscribe", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, source: variant }),
+      });
+      if (!res.ok) throw new Error("Failed");
       setStatus("success");
       setEmail("");
     } catch {
@@ -85,22 +78,27 @@ function NewsletterForm({
   }
 
   return (
-    <form onSubmit={onSubmit} className={`flex gap-2 ${compact ? "max-w-xs" : "max-w-sm"}`}>
-      <input
-        type="email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        required
-        placeholder="email@example.com"
-        className="flex-1 px-3 py-2 text-sm border border-[#E9E9E9] rounded-xl bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-      />
-      <button
-        type="submit"
-        disabled={status === "loading"}
-        className="px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-xl hover:bg-blue-700 disabled:opacity-50 transition-colors whitespace-nowrap"
-      >
-        {status === "loading" ? "..." : "Đăng ký"}
-      </button>
-    </form>
+    <div className={compact ? "max-w-xs" : "max-w-sm"}>
+      <form onSubmit={onSubmit} className="flex gap-2">
+        <input
+          type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          required
+          placeholder="email@example.com"
+          className="flex-1 px-3 py-2 text-sm border border-[#E9E9E9] rounded-xl bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+        />
+        <button
+          type="submit"
+          disabled={status === "loading"}
+          className="px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-xl hover:bg-blue-700 disabled:opacity-50 transition-colors whitespace-nowrap"
+        >
+          {status === "loading" ? "..." : "Đăng ký"}
+        </button>
+      </form>
+      {status === "error" && (
+        <p className="text-xs text-red-500 mt-2">Có lỗi xảy ra, vui lòng thử lại.</p>
+      )}
+    </div>
   );
 }

@@ -23,6 +23,7 @@ export const posts = pgTable(
     seoTitle: varchar("seo_title", { length: 60 }),
     seoDescription: varchar("seo_description", { length: 160 }),
     language: varchar("language", { length: 2 }).notNull().default("vi"),
+    tier: varchar("tier", { length: 10 }).notNull().default("free"),
     status: varchar("status", { length: 10 }).notNull().default("draft"),
     publishedAt: timestamp("published_at", { withTimezone: true }),
     createdAt: timestamp("created_at", { withTimezone: true }).notNull().default(sql`now()`),
@@ -61,9 +62,24 @@ export const author = pgTable("author", {
   passwordHash: varchar("password_hash", { length: 255 }).notNull(),
 });
 
+export const subscribers = pgTable(
+  "subscribers",
+  {
+    id: uuid("id").primaryKey().default(sql`gen_random_uuid()`),
+    email: varchar("email", { length: 320 }).notNull().unique(),
+    status: varchar("status", { length: 12 }).notNull().default("active"), // active | unsubscribed
+    source: varchar("source", { length: 40 }),
+    unsubscribeToken: uuid("unsubscribe_token").notNull().default(sql`gen_random_uuid()`),
+    createdAt: timestamp("created_at", { withTimezone: true }).notNull().default(sql`now()`),
+  },
+  (table) => [uniqueIndex("idx_subscribers_email").on(table.email)]
+);
+
 export type PostRecord = typeof posts.$inferSelect;
 export type NewPostRecord = typeof posts.$inferInsert;
 export type SessionRecord = typeof sessions.$inferSelect;
 export type NewSessionRecord = typeof sessions.$inferInsert;
 export type RateLimitRecord = typeof rateLimitAttempts.$inferSelect;
 export type AuthorRecord = typeof author.$inferSelect;
+export type SubscriberRecord = typeof subscribers.$inferSelect;
+export type NewSubscriberRecord = typeof subscribers.$inferInsert;

@@ -10,13 +10,18 @@ import {
   LinkedinLogo,
   GithubLogo,
 } from "@phosphor-icons/react/dist/ssr";
-import { getPostBySlug, getAllPublishedPostsForSitemap } from "@/db/posts";
+import { getPostBySlug, getAllPublishedPostsForSitemap, getRelatedPosts } from "@/db/posts";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { calculateReadingTime } from "@/lib/content";
 import { ReadingProgress } from "@/components/blog/ReadingProgress";
 import { ScrollToTop } from "@/components/blog/ScrollToTop";
 import { GiscusComments } from "@/components/blog/GiscusComments";
 import { NewsletterCTA } from "@/components/ui/NewsletterCTA";
+import { SubscribeModal } from "@/components/ui/SubscribeModal";
+import { ShareButtons } from "@/components/blog/ShareButtons";
+import { TableOfContents } from "@/components/blog/TableOfContents";
+import { PostCard } from "@/components/blog/PostCard";
+import { SupportCTA } from "@/components/ui/SupportCTA";
 
 export const revalidate = 60;
 
@@ -84,6 +89,8 @@ export default async function PostDetailPage({ params }: PostPageProps) {
   const post = await getPostBySlug(slug);
   if (!post) notFound();
 
+  const relatedPosts = await getRelatedPosts(post.slug, post.tags, 3);
+
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://dat.ngo";
   const canonicalUrl = `${siteUrl}/blog/${post.slug}`;
   const ogImage = buildOgImage(post);
@@ -138,6 +145,7 @@ export default async function PostDetailPage({ params }: PostPageProps) {
       <JsonLd data={breadcrumbJsonLd} />
       <ReadingProgress />
       <ScrollToTop />
+      <SubscribeModal />
 
       {/* Reading container — narrower than site max for focus */}
       <div className="max-w-[740px] mx-auto px-5 py-10 sm:py-14">
@@ -216,16 +224,39 @@ export default async function PostDetailPage({ params }: PostPageProps) {
 
         <hr className="border-[#E9E9E9] mb-10" />
 
+        {/* ── Table of contents (auto, long posts only) ── */}
+        <TableOfContents />
+
         {/* ── Article body ── */}
         <div
           className="article-prose prose prose-lg max-w-none"
           dangerouslySetInnerHTML={{ __html: post.body }}
         />
 
-        <hr className="border-[#E9E9E9] mt-12 mb-10" />
+        {/* ── Share ── */}
+        <div className="mt-10 pt-6 border-t border-[#E9E9E9]">
+          <ShareButtons title={post.title} url={canonicalUrl} />
+        </div>
+
+        <hr className="border-[#E9E9E9] mt-10 mb-10" />
 
         {/* ── Newsletter ── */}
         <NewsletterCTA variant="post" />
+
+        {/* ── Support / tip (renders only if env links set) ── */}
+        <SupportCTA />
+
+        {/* ── Related posts ── */}
+        {relatedPosts.length > 0 && (
+          <section className="mt-12 pt-10 border-t border-[#E9E9E9]">
+            <h2 className="text-lg font-bold text-neutral-900 mb-6">Bài liên quan</h2>
+            <div className="grid sm:grid-cols-2 gap-x-6">
+              {relatedPosts.map((rp) => (
+                <PostCard key={rp.id} post={rp} />
+              ))}
+            </div>
+          </section>
+        )}
 
         {/* ── Comments ── */}
         <GiscusComments slug={post.slug} />
