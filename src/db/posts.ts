@@ -18,6 +18,7 @@ function mapToPost(row: any): Post {
     seoDescription: row.seo_description ?? null,
     language: row.language ?? "vi",
     status: row.status,
+    views: row.views ?? 0,
     publishedAt: row.published_at ? new Date(row.published_at) : null,
     createdAt: new Date(row.created_at),
     updatedAt: new Date(row.updated_at),
@@ -36,6 +37,7 @@ function mapToPostListItem(row: any): PostListItem {
     language: row.language ?? "vi",
     publishedAt: new Date(row.published_at),
     readingTimeMinutes: calculateReadingTime(row.body),
+    views: row.views ?? 0,
   };
 }
 
@@ -213,6 +215,21 @@ export async function getRelatedPosts(
   }
 
   return posts.slice(0, limit);
+}
+
+export async function incrementPostViews(slug: string): Promise<void> {
+  await supabase.rpc("increment_post_views", { p_slug: slug });
+}
+
+export async function getPopularPosts(limit = 4): Promise<PostListItem[]> {
+  const { data } = await supabase
+    .from("posts")
+    .select("*")
+    .eq("status", "published")
+    .order("views", { ascending: false })
+    .order("published_at", { ascending: false })
+    .limit(limit);
+  return (data ?? []).map(mapToPostListItem);
 }
 
 export async function getRecentPublishedPosts(limit = 20): Promise<PostListItem[]> {

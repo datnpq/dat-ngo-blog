@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ArrowRight } from "@phosphor-icons/react/dist/ssr";
+import { ArrowRight, Eye, Clock } from "@phosphor-icons/react/dist/ssr";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { NewsletterCTA } from "@/components/ui/NewsletterCTA";
+import { getPopularPosts } from "@/db/posts";
 
 export const revalidate = 3600;
 
@@ -54,7 +55,14 @@ const topics = [
   { label: "Founder Diary", href: "/blog" },
 ];
 
-export default function HomePage() {
+export default async function HomePage() {
+  let popular: Awaited<ReturnType<typeof getPopularPosts>> = [];
+  try {
+    popular = await getPopularPosts(4);
+  } catch {
+    // DB unavailable
+  }
+
   return (
     <>
       <JsonLd data={personJsonLd} />
@@ -115,6 +123,36 @@ export default function HomePage() {
             ))}
           </div>
         </section>
+
+        {/* Popular posts */}
+        {popular.length > 0 && (
+          <section className="py-10 border-b border-[#E9E9E9]">
+            <p className="text-xs font-semibold uppercase tracking-widest text-neutral-400 mb-4">Bài đọc nhiều</p>
+            <div className="flex flex-col">
+              {popular.map((p) => (
+                <Link
+                  key={p.id}
+                  href={`/blog/${p.slug}`}
+                  className="group flex items-baseline justify-between gap-4 py-2.5 border-b border-[#F0F0EE] last:border-0"
+                >
+                  <span className="text-sm text-neutral-700 group-hover:text-blue-700 transition-colors line-clamp-1">
+                    {p.title}
+                  </span>
+                  <span className="flex items-center gap-3 text-xs text-neutral-400 shrink-0">
+                    <span className="flex items-center gap-1">
+                      <Eye size={11} />
+                      {p.views.toLocaleString("vi-VN")}
+                    </span>
+                    <span className="hidden sm:flex items-center gap-1">
+                      <Clock size={11} />
+                      {p.readingTimeMinutes}'
+                    </span>
+                  </span>
+                </Link>
+              ))}
+            </div>
+          </section>
+        )}
 
         {/* Newsletter */}
         <section className="py-10 border-b border-[#E9E9E9]">
