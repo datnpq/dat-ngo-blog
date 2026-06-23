@@ -215,6 +215,58 @@ export async function getRelatedPosts(
   return posts.slice(0, limit);
 }
 
+export async function getRecentPublishedPosts(limit = 20): Promise<PostListItem[]> {
+  const { data } = await supabase
+    .from("posts")
+    .select("*")
+    .eq("status", "published")
+    .order("published_at", { ascending: false })
+    .limit(limit);
+  return (data ?? []).map(mapToPostListItem);
+}
+
+export async function getPostsByTag(tag: string): Promise<PostListItem[]> {
+  const { data } = await supabase
+    .from("posts")
+    .select("*")
+    .eq("status", "published")
+    .contains("tags", [tag])
+    .order("published_at", { ascending: false });
+  return (data ?? []).map(mapToPostListItem);
+}
+
+export async function getAllTags(): Promise<string[]> {
+  const { data } = await supabase
+    .from("posts")
+    .select("tags")
+    .eq("status", "published");
+  const counts = new Map<string, number>();
+  for (const row of data ?? []) {
+    for (const t of (row.tags ?? []) as string[]) {
+      counts.set(t, (counts.get(t) ?? 0) + 1);
+    }
+  }
+  return [...counts.entries()].sort((a, b) => b[1] - a[1]).map(([t]) => t);
+}
+
+export async function getAdjacentPosts(
+  slug: string
+): Promise<{ prev: PostListItem | null; next: PostListItem | null }> {
+  const { data } = await supabase
+    .from("posts")
+    .select("*")
+    .eq("status", "published")
+    .order("published_at", { ascending: false });
+  const list = (data ?? []).map(mapToPostListItem);
+  const i = list.findIndex((p) => p.slug === slug);
+  if (i === -1) return { prev: null, next: null };
+  // newer = "prev" visually (above), older = "next"
+  return {
+    prev: i > 0 ? list[i - 1] : null,
+    next: i < list.length - 1 ? list[i + 1] : null,
+  };
+}
+
 export async function getAllPublishedPostsForSitemap(): Promise<
   Array<{ slug: string; updatedAt: Date }>
 > {
