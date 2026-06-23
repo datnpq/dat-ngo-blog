@@ -13,6 +13,7 @@ export interface Post {
   seoDescription: string | null;
   language: PostLanguage;
   status: PostStatus;
+  views: number;
   publishedAt: Date | null;
   createdAt: Date;
   updatedAt: Date;
@@ -28,6 +29,7 @@ export interface PostListItem {
   language: PostLanguage;
   publishedAt: Date;
   readingTimeMinutes: number;
+  views: number;
 }
 
 export interface CreatePostInput {

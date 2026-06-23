@@ -23,6 +23,7 @@ import { TableOfContents } from "@/components/blog/TableOfContents";
 import { PostCard } from "@/components/blog/PostCard";
 import { SupportCTA } from "@/components/ui/SupportCTA";
 import { CodeCopyButtons } from "@/components/blog/CodeCopyButtons";
+import { ViewCounter } from "@/components/blog/ViewCounter";
 import { ArrowRight } from "@phosphor-icons/react/dist/ssr";
 
 export const revalidate = 60;
@@ -207,6 +208,8 @@ export default async function PostDetailPage({ params }: PostPageProps) {
                   <Clock size={11} />
                   {readingTime} phút đọc
                 </span>
+                <span>·</span>
+                <ViewCounter slug={post.slug} initial={post.views} />
               </div>
             </div>
           </div>

@@ -5,6 +5,7 @@ import {
   text,
   timestamp,
   serial,
+  integer,
   index,
   uniqueIndex,
 } from "drizzle-orm/pg-core";
@@ -24,6 +25,7 @@ export const posts = pgTable(
     seoDescription: varchar("seo_description", { length: 160 }),
     language: varchar("language", { length: 2 }).notNull().default("vi"),
     tier: varchar("tier", { length: 10 }).notNull().default("free"),
+    views: integer("views").notNull().default(0),
     status: varchar("status", { length: 10 }).notNull().default("draft"),
     publishedAt: timestamp("published_at", { withTimezone: true }),
     createdAt: timestamp("created_at", { withTimezone: true }).notNull().default(sql`now()`),
