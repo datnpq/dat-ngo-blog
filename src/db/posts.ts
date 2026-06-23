@@ -218,7 +218,22 @@ export async function getRelatedPosts(
 }
 
 export async function incrementPostViews(slug: string): Promise<void> {
-  await supabase.rpc("increment_post_views", { p_slug: slug });
+  // Prefer the atomic RPC if present; fall back to read+update otherwise.
+  const { error } = await supabase.rpc("increment_post_views", { p_slug: slug });
+  if (!error) return;
+
+  const { data } = await supabase
+    .from("posts")
+    .select("views")
+    .eq("slug", slug)
+    .eq("status", "published")
+    .limit(1);
+  const current = data?.[0]?.views;
+  if (current == null) return;
+  await supabase
+    .from("posts")
+    .update({ views: current + 1 })
+    .eq("slug", slug);
 }
 
 export async function getPopularPosts(limit = 4): Promise<PostListItem[]> {
